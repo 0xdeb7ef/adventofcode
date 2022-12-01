@@ -2,39 +2,32 @@
 #include <string>
 using namespace std;
 
-int main(int argc, char const *argv[])
-{
-    int max[3] = {0};
+#define TOP 3
+
+int main(int argc, char const *argv[]) {
+    int max[TOP] = {0};
     int sum = 0;
 
-    for (string line; getline(cin, line);)
-    {
+    for (string line; getline(cin, line);) {
         if (line == "")
             sum = 0;
-        else
-        {
+        else {
             sum += stoi(line);
 
-            if (sum > max[0])
-            {
-                max[2] = max[1];
-                max[1] = max[0];
-                max[0] = sum;
-            }
-            else if (sum > max[1])
-            {
-                max[2] = max[1];
-                max[1] = sum;
-            }
-            else if (sum > max[2])
-            {
-                max[2] = sum;
+            for (int i = 0; i < TOP; i++) {
+                if (sum > max[i]) {
+                    for (int j = TOP - 1; j > i; j--) {
+                        max[j] = max[j - 1];
+                    }
+                    max[i] = sum;
+                    break;
+                }
             }
         }
     }
+
     sum = 0;
-    for (int i = 0; i < 3; i++)
-    {
+    for (int i = 0; i < TOP; i++) {
         cout << max[i] << " ";
         sum += max[i];
     }
