@@ -26,13 +26,9 @@ int main(int argc, char const *argv[])
     // 'Z' - 'A' + 27
     map<char, int> priorities;
     for (char i = 'a'; i <= 'z'; i++)
-    {
         priorities[i] = i - 'a' + 1;
-    }
     for (char i = 'A'; i <= 'Z'; i++)
-    {
         priorities[i] = i - 'A' + 27;
-    }
 
     int total = 0;
     int total2 = 0;
