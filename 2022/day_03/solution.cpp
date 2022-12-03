@@ -7,25 +7,17 @@ using namespace std;
 
 #define sort_vec(vec) sort(vec.begin(), vec.end())
 
-void str_to_vec(string str, vector<char> &vec)
-{
-    for (auto c : str)
+#define str_to_vec(str, vec) \
+    for (auto c : str)       \
         vec.push_back(c);
-}
 
-void split_string(string str, vector<char> &vec1, vector<char> &vec2)
-{
-    for (int i = 0; i < str.length() / 2; i++)
-        vec1.push_back(str[i]);
-
-    for (int i = str.length() / 2; i < str.length(); i++)
+#define split_string(str, vec1, vec2)                     \
+    for (int i = 0; i < str.length() / 2; i++)            \
+        vec1.push_back(str[i]);                           \
+    for (int i = str.length() / 2; i < str.length(); i++) \
         vec2.push_back(str[i]);
-}
 
-void intersect_vec(vector<char> vec1, vector<char> vec2, vector<char> &out)
-{
-    set_intersection(vec1.begin(), vec1.end(), vec2.begin(), vec2.end(), out.begin());
-}
+#define intersect_vec(vec1, vec2, out) set_intersection(vec1.begin(), vec1.end(), vec2.begin(), vec2.end(), out.begin());
 
 int main(int argc, char const *argv[])
 {
