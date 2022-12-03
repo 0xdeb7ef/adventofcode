@@ -1,10 +1,31 @@
-#include <iostream>
-#include <string>
 #include <algorithm>
-#include <cstring>
-#include <vector>
+#include <iostream>
 #include <map>
+#include <string>
+#include <vector>
 using namespace std;
+
+#define sort_vec(vec) sort(vec.begin(), vec.end())
+
+void str_to_vec(string str, vector<char> &vec)
+{
+    for (auto c : str)
+        vec.push_back(c);
+}
+
+void split_string(string str, vector<char> &vec1, vector<char> &vec2)
+{
+    for (int i = 0; i < str.length() / 2; i++)
+        vec1.push_back(str[i]);
+
+    for (int i = str.length() / 2; i < str.length(); i++)
+        vec2.push_back(str[i]);
+}
+
+void intersect_vec(vector<char> vec1, vector<char> vec2, vector<char> &out)
+{
+    set_intersection(vec1.begin(), vec1.end(), vec2.begin(), vec2.end(), out.begin());
+}
 
 int main(int argc, char const *argv[])
 {
@@ -22,28 +43,55 @@ int main(int argc, char const *argv[])
     }
 
     int total = 0;
+    int total2 = 0;
 
     for (string line; getline(cin, line);)
     {
-        int n = line.size() / 2;
-        char cOne[n + 1];
-        char cTwo[n + 1];
-        strcpy(cOne, line.substr(0, n).c_str());
-        strcpy(cTwo, line.substr(n, line.size()).c_str());
+        string line2;
+        getline(cin, line2);
+        string line3;
+        getline(cin, line3);
 
-        sort(cOne, cOne + n);
-        sort(cTwo, cTwo + n);
+        vector<char> l1, l1p1, l1p2;
+        vector<char> l2, l2p1, l2p2;
+        vector<char> l3, l3p1, l3p2;
 
-        vector<char> v(line.length());
-        vector<char>::iterator it, st;
+        str_to_vec(line, l1);
+        str_to_vec(line2, l2);
+        str_to_vec(line3, l3);
+        split_string(line, l1p1, l1p2);
+        split_string(line2, l2p1, l2p2);
+        split_string(line3, l3p1, l3p2);
+        sort_vec(l1p1);
+        sort_vec(l1p2);
+        sort_vec(l2p1);
+        sort_vec(l2p2);
+        sort_vec(l3p1);
+        sort_vec(l3p2);
+        sort_vec(l1);
+        sort_vec(l2);
+        sort_vec(l3);
 
-        it = set_intersection(cOne, cOne + n, cTwo, cTwo + n, v.begin());
-        for (st = v.begin(); st != it; st++)
-        {
-            total += priorities[*st];
-            break;
-        }
+        // part 1
+        vector<char> i1(line.length());
+        vector<char> i2(line2.length());
+        vector<char> i3(line3.length());
+        intersect_vec(l1p1, l1p2, i1);
+        intersect_vec(l2p1, l2p2, i2);
+        intersect_vec(l3p1, l3p2, i3);
+        total += priorities[i1[0]];
+        total += priorities[i2[0]];
+        total += priorities[i3[0]];
+
+        // part 2
+        vector<char> j1(line.length());
+        vector<char> j2(line.length());
+        intersect_vec(l1, l2, j1);
+        sort_vec(j1);
+        intersect_vec(j1, l3, j2);
+        total2 += priorities[j2[0]];
     }
     cout << total << endl;
+    cout << total2 << endl;
     return 0;
 }
