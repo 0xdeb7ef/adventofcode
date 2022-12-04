@@ -1,7 +1,7 @@
+#include <algorithm>
 #include <iostream>
 #include <string>
 #include <vector>
-#include <algorithm>
 using namespace std;
 
 int main(int argc, char const *argv[])
@@ -26,13 +26,16 @@ int main(int argc, char const *argv[])
             second.push_back(i);
 
         // part 1
-        if (includes(first.begin(), first.end(), second.begin(), second.end()) || includes(second.begin(), second.end(), first.begin(), first.end()))
+        if (includes(first.begin(), first.end(), second.begin(), second.end()) ||
+            includes(second.begin(), second.end(), first.begin(), first.end()))
             count++;
 
-        // part2
+        // part 2
         int size = first.size() <= second.size() ? first.size() : second.size();
         vector<int> intersection(size);
-        set_intersection(first.begin(), first.end(), second.begin(), second.end(), intersection.begin());
+        set_intersection(first.begin(), first.end(),
+                         second.begin(), second.end(),
+                         intersection.begin());
         for (auto x : intersection)
         {
             if (x != 0)
