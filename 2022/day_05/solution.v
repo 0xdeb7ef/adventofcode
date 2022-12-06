@@ -23,8 +23,8 @@ fn main() {
 			if chr == '' {
 				continue
 			} else {
-				stacks[i] << chr.replace('[', '').replace(']', '')
-				stacks2[i] << chr.replace('[', '').replace(']', '')
+				stacks[i] << chr.trim('[]')
+				stacks2[i] << chr.trim('[]')
 			}
 		}
 	}
@@ -36,19 +36,16 @@ fn main() {
 
 		// Part 1
 		for _ in 0 .. count {
-			stacks[to] << stacks[from].last()
-			stacks[from].pop()
+			stacks[to] << stacks[from].pop()
 		}
 
 		// Part2
 		mut temp := []string{}
 		for _ in 0 .. count {
-			temp << stacks2[from].last()
-			stacks2[from].pop()
+			temp << stacks2[from].pop()
 		}
 		for _ in 0 .. count {
-			stacks2[to] << temp.last()
-			temp.pop()
+			stacks2[to] << temp.pop()
 		}
 	}
 
