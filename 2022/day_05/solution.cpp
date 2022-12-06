@@ -36,16 +36,18 @@ int main(int argc, char const *argv[])
 
     for (string line; getline(cin, line);)
     {
-        // hopefully skips until the first move
+        // skips until the first move
         if (line.find("move"))
             continue;
 
+        // C++ Black Magic to split strings by spaces
         string temp;
         stringstream SS(line);
         int count = 0;
         int from = 0;
         int to = 0;
 
+        // C++ Black Magic Part 2: Electric Boogaloo
         for (int i = 0; getline(SS, temp, ' '); i++)
         {
             switch (i)
@@ -65,10 +67,28 @@ int main(int argc, char const *argv[])
             }
         }
 
+        /* Part 1 */
+        // for (int i = 0; i < count; i++)
+        // {
+        //     Stacks[to].push(Stacks[from].top());
+        //     Stacks[from].pop();
+        // }
+
+        /* Part 2 */
+        /* Unfortunately, you will have to comment out the part
+         * you don't want to run, as well as manually having to
+         * enter the initial configuration :')
+         */
+        stack<char> temp_stack;
         for (int i = 0; i < count; i++)
         {
-            Stacks[to].push(Stacks[from].top());
+            temp_stack.push(Stacks[from].top());
             Stacks[from].pop();
+        }
+        for (int i = 0; i < count; i++)
+        {
+            Stacks[to].push(temp_stack.top());
+            temp_stack.pop();
         }
     }
     for (int i = 0; i < STACKS; i++)
