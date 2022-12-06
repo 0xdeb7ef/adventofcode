@@ -2,6 +2,11 @@ import os
 import arrays
 import datatypes { Set }
 
+const (
+	size_1 = 4
+	size_2 = 14
+)
+
 fn main() {
 	lines := os.read_lines('input.txt')!
 
@@ -9,7 +14,6 @@ fn main() {
 		arr := []u8{len: line.len, init: line[it]}
 
 		// Part 1
-		size_1 := 4
 		for i, a in arrays.window(arr, size: size_1) {
 			mut set := Set[u8]{}
 			set.add_all(a)
@@ -20,7 +24,6 @@ fn main() {
 		}
 
 		// Part 2
-		size_2 := 14
 		for i, a in arrays.window(arr, size: size_2) {
 			mut set := Set[u8]{}
 			set.add_all(a)
