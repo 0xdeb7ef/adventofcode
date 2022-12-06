@@ -1,5 +1,4 @@
 import os
-import datatypes
 
 fn main() {
 	lines := os.read_lines('input.txt')!
@@ -15,8 +14,8 @@ fn main() {
 		}
 	}
 
-	mut stacks := []datatypes.Stack[string]{len: size, init: datatypes.Stack[string]{}}
-	mut stacks2 := []datatypes.Stack[string]{len: size, init: datatypes.Stack[string]{}}
+	mut stacks := [][]string{len: size, cap: size}
+	mut stacks2 := [][]string{len: size, cap: size}
 
 	for line in lines[..trip].reverse() {
 		filt_line := line.replace('    ', ' ').split(' ')
@@ -24,8 +23,8 @@ fn main() {
 			if chr == '' {
 				continue
 			} else {
-				stacks[i].push(chr)
-				stacks2[i].push(chr)
+				stacks[i] << chr.replace('[', '').replace(']', '')
+				stacks2[i] << chr.replace('[', '').replace(']', '')
 			}
 		}
 	}
@@ -37,27 +36,22 @@ fn main() {
 
 		// Part 1
 		for _ in 0 .. count {
-			stacks[to].push(stacks[from].pop()!)
+			stacks[to] << stacks[from].last()
+			stacks[from].pop()
 		}
 
 		// Part2
-		mut temp := datatypes.Stack[string]{}
+		mut temp := []string{}
 		for _ in 0 .. count {
-			temp.push(stacks2[from].pop()!)
+			temp << stacks2[from].last()
+			stacks2[from].pop()
 		}
 		for _ in 0 .. count {
-			stacks2[to].push(temp.pop()!)
+			stacks2[to] << temp.last()
+			temp.pop()
 		}
 	}
 
-	print('Part 1: ')
-	for s in stacks {
-		print(s.peek()!)
-	}
-	println('')
-	print('Part 2: ')
-	for s in stacks2 {
-		print(s.peek()!)
-	}
-	println('')
+	println('Part 1: ${stacks.map(it.last()).join('')}')
+	println('Part 2: ${stacks2.map(it.last()).join('')}')
 }
