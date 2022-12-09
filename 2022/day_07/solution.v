@@ -15,7 +15,7 @@ const (
 )
 
 fn main() {
-	lines := os.read_lines('input.txt')!
+	lines := os.read_lines('example.txt')!
 
 	mut nptr := unsafe { &Node(0) }
 	mut dirs := map[string]&Node{}

@@ -2,7 +2,7 @@ import os
 import arrays
 
 fn main() {
-	lines := os.read_lines('input.txt')!
+	lines := os.read_lines('example.txt')!
 	mut trees := [][]int{len: lines.len, init: []int{len: lines.len}}
 	mut trees_v := [][]bool{len: lines.len, init: []bool{len: lines.len}}
 	mut trees_s := [][]int{len: lines.len, init: []int{len: lines.len}}

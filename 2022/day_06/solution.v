@@ -8,7 +8,7 @@ const (
 )
 
 fn main() {
-	lines := os.read_lines('input.txt')!
+	lines := os.read_lines('example.txt')!
 
 	for line in lines {
 		arr := []u8{len: line.len, init: line[it]}
