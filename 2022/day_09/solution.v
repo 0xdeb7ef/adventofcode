@@ -1,5 +1,6 @@
-import os
-import math
+import os { read_lines }
+import math { sqrti }
+import datatypes { Set }
 
 struct Knot {
 pub mut:
@@ -33,14 +34,14 @@ fn (v Vec) normalize() Vec {
 }
 
 fn main() {
-	lines := os.read_lines('example.txt')!
-	lines_l := os.read_lines('example_large.txt')!
+	lines := read_lines('example.txt')!
+	lines_l := read_lines('example_large.txt')!
 
 	mut knots_1 := []Knot{len: 2}
 	mut knots_2 := []Knot{len: 10}
 
-	mut locations_1 := [][]int{}
-	mut locations_2 := [][]int{}
+	mut locations_1 := Set[string]{}
+	mut locations_2 := Set[string]{}
 
 	for l in lines {
 		process_cmd(l, mut knots_1, mut locations_1)
@@ -49,11 +50,11 @@ fn main() {
 		process_cmd(l, mut knots_2, mut locations_2)
 	}
 
-	println('Part 1: ${locations_1.len}')
-	println('Part 2: ${locations_2.len}')
+	println('Part 1: ${locations_1.size()}')
+	println('Part 2: ${locations_2.size()}')
 }
 
-fn process_cmd(cmd string, mut k []Knot, mut loc [][]int) {
+fn process_cmd(cmd string, mut k []Knot, mut loc Set[string]) {
 	dir := cmd.split(' ')[0]
 	step := cmd.split(' ')[1].int()
 
@@ -70,7 +71,7 @@ fn process_cmd(cmd string, mut k []Knot, mut loc [][]int) {
 	process_move(vec, mut k, step, mut loc)
 }
 
-fn process_move(vec Vec, mut k []Knot, step int, mut loc [][]int) {
+fn process_move(vec Vec, mut k []Knot, step int, mut loc Set[string]) {
 	for _ in 0 .. step {
 		// move head
 		k[0].x += vec.x
@@ -79,20 +80,19 @@ fn process_move(vec Vec, mut k []Knot, step int, mut loc [][]int) {
 		// go over the rest of the knots 1 by 1
 		for i := 1; i < k.len; i++ {
 			if calc_distance(k[i - 1], k[i]) > 1 {
-				k[i].x += calc_vec(k[i - 1], k[i]).normalize().x
-				k[i].y += calc_vec(k[i - 1], k[i]).normalize().y
+				v := calc_vec(k[i - 1], k[i]).normalize()
+				k[i].x += v.x
+				k[i].y += v.y
 			}
 		}
 
 		// add position to array if it doesnt exist
-		if !loc.contains([k.last().x, k.last().y]) {
-			loc << [k.last().x, k.last().y]
-		}
+		loc.add('${k.last().x},${k.last().y}')
 	}
 }
 
 fn calc_distance(h Knot, t Knot) i64 {
-	return math.sqrti((h.x - t.x) * (h.x - t.x) + (h.y - t.y) * (h.y - t.y))
+	return sqrti((h.x - t.x) * (h.x - t.x) + (h.y - t.y) * (h.y - t.y))
 }
 
 fn calc_vec(h Knot, t Knot) Vec {
