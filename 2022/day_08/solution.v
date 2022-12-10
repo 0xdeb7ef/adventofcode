@@ -1,8 +1,8 @@
-import os
-import arrays
+import os { read_lines }
+import arrays { flatten, max }
 
 fn main() {
-	lines := os.read_lines('example.txt')!
+	lines := read_lines('example.txt')!
 	mut trees := [][]int{len: lines.len, init: []int{len: lines.len}}
 	mut trees_v := [][]bool{len: lines.len, init: []bool{len: lines.len}}
 	mut trees_s := [][]int{len: lines.len, init: []int{len: lines.len}}
@@ -25,7 +25,7 @@ fn main() {
 	for i := 1; i < trees.len - 1; i++ {
 		for j := 1; j < trees.len - 1; j++ {
 			// Part 1: Looking right
-			if trees[i][j] > arrays.max(trees[i][..j])! {
+			if trees[i][j] > max(trees[i][..j])! {
 				trees_v[i][j] = true
 			}
 			mut right := trees.len - j - 1
@@ -39,7 +39,7 @@ fn main() {
 
 			mut left := j
 			// Part 1: Looking left
-			if trees[i][j] > arrays.max(trees[i][j + 1..])! {
+			if trees[i][j] > max(trees[i][j + 1..])! {
 				trees_v[i][j] = true
 			}
 			// Part 2: Looking left from tree
@@ -56,7 +56,7 @@ fn main() {
 			for t in trees[..i] {
 				temp_arr << t[j]
 			}
-			if trees[i][j] > arrays.max(temp_arr)! {
+			if trees[i][j] > max(temp_arr)! {
 				trees_v[i][j] = true
 			}
 			temp_arr.clear()
@@ -77,7 +77,7 @@ fn main() {
 			for t in trees[i + 1..] {
 				temp_arr << t[j]
 			}
-			if trees[i][j] > arrays.max(temp_arr)! {
+			if trees[i][j] > max(temp_arr)! {
 				trees_v[i][j] = true
 			}
 			temp_arr.clear()
@@ -96,6 +96,6 @@ fn main() {
 			trees_s[i][j] = up * down * left * right
 		}
 	}
-	println('Part 1: ${arrays.flatten(trees_v).filter(it == true).len}')
-	println('Part 2: ${arrays.max(arrays.flatten(trees_s))!}')
+	println('Part 1: ${flatten(trees_v).filter(it == true).len}')
+	println('Part 2: ${max(flatten(trees_s))!}')
 }

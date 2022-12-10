@@ -1,7 +1,7 @@
-import os
+import os { read_lines }
 
 fn main() {
-	lines := os.read_lines('example.txt')!
+	lines := read_lines('example.txt')!
 
 	mut trip := 0
 	mut size := 0

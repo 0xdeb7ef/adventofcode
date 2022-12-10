@@ -1,5 +1,5 @@
-import os
-import arrays
+import os { read_lines }
+import arrays { window }
 import datatypes { Set }
 
 const (
@@ -8,13 +8,13 @@ const (
 )
 
 fn main() {
-	lines := os.read_lines('example.txt')!
+	lines := read_lines('example.txt')!
 
 	for line in lines {
 		arr := []u8{len: line.len, init: line[it]}
 
 		// Part 1
-		for i, a in arrays.window(arr, size: size_1) {
+		for i, a in window(arr, size: size_1) {
 			mut set := Set[u8]{}
 			set.add_all(a)
 			if set.size() == size_1 {
@@ -24,7 +24,7 @@ fn main() {
 		}
 
 		// Part 2
-		for i, a in arrays.window(arr, size: size_2) {
+		for i, a in window(arr, size: size_2) {
 			mut set := Set[u8]{}
 			set.add_all(a)
 			if set.size() == size_2 {

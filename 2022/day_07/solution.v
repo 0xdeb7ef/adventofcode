@@ -1,4 +1,4 @@
-import os
+import os { read_lines }
 
 struct Node {
 mut:
@@ -15,7 +15,7 @@ const (
 )
 
 fn main() {
-	lines := os.read_lines('example.txt')!
+	lines := read_lines('example.txt')!
 
 	mut nptr := unsafe { &Node(0) }
 	mut dirs := map[string]&Node{}
