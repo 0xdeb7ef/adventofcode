@@ -86,7 +86,7 @@ fn process_move(vec Vec, mut k []Knot, step int, mut loc Set[string]) {
 			}
 		}
 
-		// add position to array if it doesnt exist
+		// add position to set if it doesnt exist
 		loc.add('${k.last().x},${k.last().y}')
 	}
 }
