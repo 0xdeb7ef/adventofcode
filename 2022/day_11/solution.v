@@ -12,7 +12,7 @@ pub mut:
 }
 
 fn main() {
-	file := read_file('input.txt')!
+	file := read_file('example.txt')!
 	lines := file.split('\n\n')
 
 	mut monkeys_1 := []Monkey{len: lines.len, init: Monkey{}}
