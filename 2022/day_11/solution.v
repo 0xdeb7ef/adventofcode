@@ -59,13 +59,11 @@ fn main() {
 	// 20 rounds, part 1
 	for _ in 0 .. 20 {
 		for mut monkey in monkeys_1 {
-			monkey.items = monkey.items.map(monkey.op(it, (monkey.am)) / 3)
-			mut tee := monkey.items.filter(it % (monkey.test) == (0))
-			mut fal := monkey.items.filter(it % (monkey.test) != (0))
+			monkey.items = monkey.items.map(monkey.op(it, monkey.am) / 3)
 			monkey.ins += u64(monkey.items.len)
+			monkey.t.items << monkey.items.filter(it % monkey.test == 0)
+			monkey.f.items << monkey.items.filter(it % monkey.test != 0)
 			monkey.items.clear()
-			monkey.t.items << tee
-			monkey.f.items << fal
 		}
 	}
 	mut ins := monkeys_1.map(it.ins)
@@ -88,13 +86,11 @@ fn main() {
 	// 10000 rounds, part 2
 	for _ in 0 .. 10000 {
 		for mut monkey in monkeys_2 {
-			monkey.items = monkey.items.map(monkey.op(it, (monkey.am)) % prod)
-			mut tee := monkey.items.filter(it % (monkey.test) == (0))
-			mut fal := monkey.items.filter(it % (monkey.test) != (0))
+			monkey.items = monkey.items.map(monkey.op(it, monkey.am) % prod)
 			monkey.ins += u64(monkey.items.len)
+			monkey.t.items << monkey.items.filter(it % monkey.test == 0)
+			monkey.f.items << monkey.items.filter(it % monkey.test != 0)
 			monkey.items.clear()
-			monkey.t.items << tee
-			monkey.f.items << fal
 		}
 	}
 
