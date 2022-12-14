@@ -52,7 +52,7 @@ fn compare(l &Node, r &Node) int {
 	mut len := 0
 	mut flag := 0
 
-	// check list length, if right is smaller, return
+	// check list length, then set a flag
 	if lc.len > rc.len {
 		len = rc.len
 		flag = -1
@@ -139,7 +139,7 @@ fn main() {
 		mut g_r := generate_graph(right)
 
 		match compare(g_l, g_r) {
-			0 { panic('nani?') }
+			0 { panic('Something broke.') }
 			1 { p1 << i + 1 }
 			else {}
 		}
@@ -149,6 +149,8 @@ fn main() {
 	lines.clear()
 
 	// Part 2
+	// I can't be bothered to process multi-digit numbers, so I'm
+	// just going to replace 10 with Z :)
 	lines = f.replace('10', 'Z').replace('\n\n', '\n').split('\n')
 	lines.pop()
 	lines << '[[2]]'
