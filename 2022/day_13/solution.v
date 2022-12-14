@@ -9,12 +9,13 @@ mut:
 	br       bool
 }
 
-fn generate_graph(s string) &Node {
+fn generate_graph(g &string) &Node {
 	mut head_node := &Node{
 		br: true
 	}
 	head_node.parent = head_node
 	mut cur_node := head_node
+	s := g.clone()
 
 	for c in s[1..] {
 		match c.ascii_str() {
@@ -124,9 +125,9 @@ fn compare(l &Node, r &Node) int {
 }
 
 fn main() {
-	f := read_file('input.txt')!
+	f := read_file('example.txt')!
 
-	lines := f.replace('10', 'Z').split('\n\n')
+	mut lines := f.replace('10', 'Z').split('\n\n')
 
 	mut p1 := []int{}
 
@@ -138,10 +139,32 @@ fn main() {
 		mut g_r := generate_graph(right)
 
 		match compare(g_l, g_r) {
+			0 { panic('nani?') }
 			1 { p1 << i + 1 }
 			else {}
 		}
 	}
 
 	println('Part 1: ${sum(p1)?}')
+	lines.clear()
+
+	// Part 2
+	lines = f.replace('10', 'Z').replace('\n\n', '\n').split('\n')
+	lines.pop()
+	lines << '[[2]]'
+	lines << '[[6]]'
+	lines.sort_with_compare(fn (a &string, b &string) int {
+		return compare(generate_graph(b), generate_graph(a))
+	})
+	mut st := 0
+	mut ed := 0
+	for i, l in lines {
+		if l == '[[2]]' {
+			st = i + 1
+		}
+		if l == '[[6]]' {
+			ed = i + 1
+		}
+	}
+	println('Part 2: ${st * ed}')
 }
