@@ -13,7 +13,7 @@ mut:
 }
 
 fn main() {
-	lines := read_lines('input.txt')!
+	lines := read_lines('example.txt')!
 
 	mut max_x := 0 // distance right -> column
 	mut max_y := 0 // distance down -> row
