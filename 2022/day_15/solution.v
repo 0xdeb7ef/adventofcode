@@ -23,19 +23,66 @@ fn main() {
 		beacons << [b_x, b_y]
 	}
 
-	// Part 1
+	println('Part 1: ${part1(sensors, beacons, 20).size()}')
+	for p in get_edges(sensors, beacons, 0, 20) {
+		if !part2(sensors, beacons, p) {
+			println('Part 2: ${u64(p[0]) * 4000000 + u64(p[1])}')
+			break
+		}
+	}
+}
+
+fn part1(sensors [][]int, beacons [][]int, y int) Set[int] {
 	mut cov := Set[int]{}
-	y := 10
 	for i, s in sensors {
 		dist := distance(s, beacons[i])
 		dist_y := abs(s[1] - y)
 
 		if dist_y <= dist {
-			for d in (s[0] - (dist - dist_y)) .. (s[0] + (dist - dist_y)) {
+			for d in s[0] - (dist - dist_y) .. s[0] + (dist - dist_y) {
 				cov.add(d)
 			}
 		}
 	}
+	return cov
+}
 
-	println('Part 1: ${cov.size()}')
+fn part2(sensors [][]int, beacons [][]int, p []int) bool {
+	for i, s in sensors {
+		if distance(p, s) <= distance(s, beacons[i]) {
+			return true
+		}
+	}
+	return false
+}
+
+fn get_edges(sensors [][]int, beacons [][]int, mini int, maxi int) [][]int {
+	// TODO - Use a Set instead, to remove duplicates.
+	mut edges := [][]int{}
+	for i, s in sensors {
+		dist := distance(s, beacons[i])
+
+		mut min := s[0] - dist - 1
+		mut max := s[0] + dist + 2
+
+		if min < mini {
+			min = mini
+		}
+		if max > maxi {
+			max = maxi
+		}
+
+		mut t := 0
+		for j in min .. (min + max) / 2 {
+			edges << [j, s[1] + t]
+			edges << [j, s[1] - t]
+			t++
+		}
+		for j in (min + max) / 2 .. max {
+			edges << [j, s[1] + t]
+			edges << [j, s[1] - t]
+			t--
+		}
+	}
+	return edges.filter(it[0] >= mini && it[0] <= maxi && it[1] >= mini && it[1] <= maxi)
 }
