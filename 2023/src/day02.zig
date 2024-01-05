@@ -19,6 +19,7 @@ pub fn day02(allocator: std.mem.Allocator, reader: *LineReader) anyerror!Result 
         const game = line[(col_idx + 2)..];
 
         var possible = true;
+        var min_cubes = Cubes{};
 
         var game_it = std.mem.splitSequence(u8, game, "; ");
         while (game_it.next()) |g| {
@@ -33,6 +34,7 @@ pub fn day02(allocator: std.mem.Allocator, reader: *LineReader) anyerror!Result 
                         if (possible) {
                             possible = @field(total_cubes, field.name) >= val;
                         }
+                        @field(min_cubes, field.name) = @max(@field(min_cubes, field.name), val);
                     }
                 }
             }
@@ -41,6 +43,9 @@ pub fn day02(allocator: std.mem.Allocator, reader: *LineReader) anyerror!Result 
         if (possible) {
             result.part1 += game_no;
         }
+
+        const power = min_cubes.red * min_cubes.green * min_cubes.blue;
+        result.part2 += power;
     }
 
     return result;
