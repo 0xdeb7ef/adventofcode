@@ -1,2 +1,3 @@
-# Advent of Code Template for Zig
-Shamelessly stolen off https://github.com/alexkuz/zig-advent-of-code-2023
+# Advent of Code 2023 in Zig
+
+###### Warning: may cause permanent brain damage.
