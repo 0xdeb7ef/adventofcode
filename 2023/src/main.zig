@@ -11,6 +11,7 @@ const DayRun = struct {
 
 const day_runs = [_]DayRun{
     .{ .run = @import("day01.zig").day01, .data = "data/day01.txt" },
+    .{ .run = @import("day02.zig").day02, .data = "data/day02.txt" },
 };
 
 const stdout_file = std.io.getStdOut().writer();
